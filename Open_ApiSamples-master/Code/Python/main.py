@@ -12,8 +12,9 @@ base_url = 'https://openapi.bazhuayu.com/'
 
 class Interface_Call_Credentials:
     def __init__(self):
-        self.user_name = 'xxx'
-        self.password = 'xxx'
+        self.user_name = ''
+        self.password = ''
+
 
     # get_new_token
     def get_new_token(self):
