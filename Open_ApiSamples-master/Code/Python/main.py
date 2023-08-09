@@ -582,8 +582,8 @@ if __name__ == '__main__':
     Data_Collection_Related = Data_Collection_Related()
 
     # Please enter an item in an account number password
-    Interface_Call_Credentials.user_name = 'andrew@freedomring.io'
-    Interface_Call_Credentials.password = '-byDEB2m7@eF'
+    Interface_Call_Credentials.user_name = ''
+    Interface_Call_Credentials.password = ''
 
     # Call the function that gets the new token of the account
     token_info = Interface_Call_Credentials.get_new_token()
