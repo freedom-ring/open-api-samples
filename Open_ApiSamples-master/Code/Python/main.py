@@ -6,8 +6,10 @@
 2022/2/23 10:52  xing       1.0          Octopus API
 """
 
-from py_executor.scripts.open_new_api import util
-base_url = 'https://openapi.bazhuayu.com/'
+import util
+base_url = 'https://openapi.octoparse.com/'
+
+TARGET_TASK = 'Leone-zillow'
 
 
 class Interface_Call_Credentials:
@@ -107,7 +109,7 @@ class this_task:
             for second_action in action["actions"]:
 
                 # Call the function that Update the steps ,LoopAction (loopType)
-                if second_action["actionType"] == "LoopType":
+                if second_action["actionType"] == "LoopAction":
                     if second_action['loopType'] == 'TextList' or second_action['loopType'] == 'TEXTList':
                         # Call the interface function that update task cycle steps
                         self.update_the_contents_of_the_loop_step(token=token_str, task_id=action["taskId"],
@@ -580,8 +582,8 @@ if __name__ == '__main__':
     Data_Collection_Related = Data_Collection_Related()
 
     # Please enter an item in an account number password
-    Interface_Call_Credentials.user_name = '18xxxxxxx6'
-    Interface_Call_Credentials.password = 'xxxxxxx'
+    Interface_Call_Credentials.user_name = 'andrew@freedomring.io'
+    Interface_Call_Credentials.password = '-byDEB2m7@eF'
 
     # Call the function that gets the new token of the account
     token_info = Interface_Call_Credentials.get_new_token()
@@ -597,29 +599,31 @@ if __name__ == '__main__':
     # groups = this_task.get_task_group(token_str)
 
     # Call the function that get the task id of the account,the task_group_id from this_task.get_task_group(),str
-    task_group_id = '2887296'  # e.g.
+    task_group = this_task.get_task_group(token=token_str)[0]  # e.g.
+    task_group_id = task_group['taskGroupId']
     tasks_info, taskid_list = this_task.get_search_task(token=token_str, taskGroupId=task_group_id)
-    taskId_list = taskid_list
+    # taskId_list = list(filter(lambda x: x['taskName'] == TARGET_TASK, tasks_info))
+    taskID_List = [task_info['taskId'] for task_info in tasks_info if task_info['taskName'] == TARGET_TASK]
 
     # Call the function that get the Obtain step information about a batch of tasks based on step type,
     # the taskId_list from this_task.get_search_task(),list
-    actions = this_task.obtain_task_step_information_in_batches(token=token_str, taskId_list=taskId_list)
+    actions = this_task.obtain_task_step_information_in_batches(token=token_str, taskId_list=taskID_List)
 
     # Call the function that update task allocation ( as otd)
     # need to get actions , from this_task.obtain_task_step_information_in_batches(),dict
     loopItems = [  # e.g.
-        'test_1',
-        "test_2",
+        '12802 OLd Club Ln Reston, VA',
+        '1415 Parker Pl Brentwood, TN'
     ]
-    update_text = 'test_text'  # e.g.
+    update_text = 'MainKeys'  # e.g.
     update_url = 'test_url_text'  # e.g.
     this_task.update_otd(actions=actions, loopItems=loopItems,update_text=update_text,  update_url=update_url)
 
 
-    taskId = '47fcxxxxxxxxxxxxxxxxxxxxxxx7a44'  # e.g.
+    taskId = taskID_List[0]
 
     # Call the function that enabling cloud Collection,the taskId from this_task.get_search_task(),str
-    # Cloud_Collection_Related.get_Enabling_cloud_Collection(token=token_str, taskId=taskId)
+    Cloud_Collection_Related.get_Enabling_cloud_Collection(token=token_str, taskId=taskId)
 
     # Call the  function that stoppping cloud Collection,the taskId from this_task.get_search_task(),str
     # Cloud_Collection_Related.get_Stopping_cloud_Collection(token=token_str, taskId=taskId)
